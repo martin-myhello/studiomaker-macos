@@ -91,6 +91,7 @@ fn open_new_window(app: tauri::AppHandle) -> Result<(), String> {
     .decorations(true)
     .hidden_title(true)
     .title_bar_style(tauri::TitleBarStyle::Overlay)
+    .traffic_light_position(tauri::Position::Logical(tauri::LogicalPosition::new(16.0, 24.0)))
     .on_navigation(|url| {
         // Allow navigation to myhello.io and partner domains
         is_allowed_url(url.as_str())
