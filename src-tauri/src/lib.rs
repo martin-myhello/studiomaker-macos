@@ -25,15 +25,14 @@ fn setup_macos_window(window: &tauri::WebviewWindow) {
     }
 }
 
-const STUDIO_URL: &str = "https://studio.myhello.io";
+const STUDIO_URL: &str = "https://studiomaker.app";
 
-/// Returns true if the URL is an allowed domain (myhello.io, supabase, googleapis)
+/// Returns true if the URL is an allowed domain (studiomaker.app, supabase, googleapis)
 fn is_allowed_url(url: &str) -> bool {
     let allowed_patterns = [
         "http://localhost",
-        "https://studio.myhello.io",
-        "https://myhello.io",
-        "https://www.myhello.io",
+        "https://studiomaker.app",
+        "https://www.studiomaker.app",
         // Supabase for API calls
         ".supabase.co",
         // Google APIs for calendar integration
@@ -88,7 +87,7 @@ fn open_new_window(app: tauri::AppHandle) -> Result<(), String> {
         &label,
         tauri::WebviewUrl::External(STUDIO_URL.parse().unwrap()),
     )
-    .title("Studio")
+    .title("StudioMaker")
     .inner_size(1280.0, 860.0)
     .min_inner_size(380.0, 380.0)
     .decorations(true)
@@ -96,7 +95,7 @@ fn open_new_window(app: tauri::AppHandle) -> Result<(), String> {
     .title_bar_style(tauri::TitleBarStyle::Overlay)
     .traffic_light_position(tauri::Position::Logical(tauri::LogicalPosition::new(16.0, 24.0)))
     .on_navigation(|url| {
-        // Allow navigation to myhello.io and partner domains
+        // Allow navigation to studiomaker.app and partner domains
         is_allowed_url(url.as_str())
     })
     .build()

@@ -9,7 +9,7 @@
   "remote": {
     "urls": [
       "http://localhost:*/*",
-      "https://*.myhello.io/*"
+      "https://*.studiomaker.app/*"
     ]
   },
   "permissions": [

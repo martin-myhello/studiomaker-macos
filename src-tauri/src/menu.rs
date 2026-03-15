@@ -5,8 +5,8 @@ use tauri::{
 use serde_json::json;
 
 pub fn setup_menu(app: &App) -> Result<(), Box<dyn std::error::Error>> {
-    // --- App (Studio) menu ---
-    let about = PredefinedMenuItem::about(app, Some("About Studio"), None)?;
+    // --- App (StudioMaker) menu ---
+    let about = PredefinedMenuItem::about(app, Some("About StudioMaker"), None)?;
     let settings = MenuItemBuilder::with_id("settings", "Settings...")
         .accelerator("CmdOrCtrl+,")
         .build(app)?;
@@ -16,7 +16,7 @@ pub fn setup_menu(app: &App) -> Result<(), Box<dyn std::error::Error>> {
     let quit = PredefinedMenuItem::quit(app, None)?;
     let check_update = MenuItemBuilder::with_id("check_update", "Check for Updates...")
         .build(app)?;
-    let app_menu = SubmenuBuilder::new(app, "Studio")
+    let app_menu = SubmenuBuilder::new(app, "StudioMaker")
         .item(&about)
         .item(&check_update)
         .separator()
@@ -98,7 +98,7 @@ pub fn setup_menu(app: &App) -> Result<(), Box<dyn std::error::Error>> {
     let go_progress = MenuItemBuilder::with_id("go_progress", "Progress")
         .accelerator("CmdOrCtrl+2")
         .build(app)?;
-    let go_studio = MenuItemBuilder::with_id("go_studio", "Studio")
+    let go_studio = MenuItemBuilder::with_id("go_studio", "StudioMaker")
         .accelerator("CmdOrCtrl+3")
         .build(app)?;
     let go_timeline = MenuItemBuilder::with_id("go_timeline", "Timeline")

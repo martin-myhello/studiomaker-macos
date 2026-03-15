@@ -1,14 +1,14 @@
-# Studio Native — Claude Code Guide
+# StudioMaker Native — Claude Code Guide
 
 ## Architecture
 
-This is a **Tauri v2** native shell — there is NO local frontend. The app loads `https://studio.myhello.io` in a WebView. All UI lives in the Next.js web app (sibling `studio/` directory).
+This is a **Tauri v2** native shell — there is NO local frontend. The app loads `https://studiomaker.app` in a WebView. All UI lives in the Next.js web app (sibling `studio/` directory).
 
 ## Key Decisions
 
 - **Remote WebView**: `frontendDist` points to the production URL. No `npm`/`node` needed.
 - **macOS private API**: Used for `NSColor` background customization via the `cocoa` crate.
-- **Capabilities system**: Permissions for IPC are in `capabilities/default.json`. The `remote.urls` field allows the web app at `*.myhello.io` to call Tauri commands.
+- **Capabilities system**: Permissions for IPC are in `capabilities/default.json`. The `remote.urls` field allows the web app at `*.studiomaker.app` to call Tauri commands.
 - **PencilKit plugin**: Custom Tauri plugin at `plugins/pencilkit/`. Uses `@_cdecl("init_plugin_pencilkit")` Swift entry point. No-ops on macOS, forwards to Swift on iOS.
 
 ## Common Tasks

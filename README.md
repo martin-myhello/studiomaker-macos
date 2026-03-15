@@ -1,6 +1,6 @@
-# Studio Native
+# StudioMaker Native
 
-Tauri v2 native shell for [MYHELLO Studio](https://studio.myhello.io). Loads the production web app in a WebView with native macOS and iOS integrations.
+Tauri v2 native shell for [StudioMaker](https://studiomaker.app). Loads the production web app in a WebView with native macOS and iOS integrations.
 
 ## Prerequisites
 

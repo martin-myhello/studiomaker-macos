@@ -1,18 +1,18 @@
 {
   "$schema": "https://raw.githubusercontent.com/nickelpack/tauri/tauri-v2/crates/tauri-config-schema/schema.json",
-  "identifier": "io.myhello.studio",
-  "productName": "Studio",
+  "identifier": "app.studiomaker",
+  "productName": "StudioMaker",
   "version": "0.4.0",
   "build": {
-    "frontendDist": "https://studio.myhello.io"
+    "frontendDist": "https://studiomaker.app"
   },
   "app": {
     "withGlobalTauri": true,
     "macOSPrivateApi": true,
     "windows": [
       {
-        "url": "https://studio.myhello.io",
-        "title": "Studio",
+        "url": "https://studiomaker.app",
+        "title": "StudioMaker",
         "width": 1280,
         "height": 860,
         "minWidth": 380,
@@ -49,7 +49,7 @@
     },
     "updater": {
       "endpoints": [
-        "https://github.com/martin-myhello/studio-native/releases/latest/download/latest.json"
+        "https://github.com/martin-myhello/studiomaker-macos/releases/latest/download/latest.json"
       ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEEwRjZBMDc2NENENzg0MTAKUldRUWhOZE1kcUQyb0UxdXY3enFpN1MwOUQxM1JXaGtIWThxaGRLZ0xCeGYvOGZFbkFibGtoSDQK"
     }
