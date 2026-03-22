@@ -1,12 +1,16 @@
 # StudioMaker Native — Claude Code Guide
 
+## IMPORTANT: Read architecture first
+**At the start of every prompt, read `/Users/home/Documents/Repositories/Studio/architecture.md`** — it defines the entire system: data model, sync strategy, client architecture, and technology decisions.
+
 ## Architecture
 
-This is a **Tauri v2** native shell — there is NO local frontend. The app loads `https://studiomaker.app` in a WebView. All UI lives in the Next.js web app (sibling `studio/` directory).
+This is a **Tauri v2** native shell. The frontend is bundled locally (Vite + React). Data comes from local SQLite via `tauri-plugin-sql`, synced to Supabase Postgres via PowerSync.
 
 ## Key Decisions
 
-- **Remote WebView**: `frontendDist` points to the production URL. No `npm`/`node` needed.
+- **Local-first**: SQLite is the source of truth. All reads are local SQL queries — no network dependency.
+- **Bundled frontend**: `frontendDist` points to the local Vite build. Web deploys do NOT update the native app.
 - **macOS private API**: Used for `NSColor` background customization via the `cocoa` crate.
 - **Capabilities system**: Permissions for IPC are in `capabilities/default.json`. The `remote.urls` field allows the web app at `*.studiomaker.app` to call Tauri commands.
 - **PencilKit plugin**: Custom Tauri plugin at `plugins/pencilkit/`. Uses `@_cdecl("init_plugin_pencilkit")` Swift entry point. No-ops on macOS, forwards to Swift on iOS.

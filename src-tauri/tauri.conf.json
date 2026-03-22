@@ -20,7 +20,7 @@
         "decorations": true,
         "titleBarStyle": "Overlay",
         "hiddenTitle": true,
-        "trafficLightPosition": { "x": 16, "y": 24 },
+        "trafficLightPosition": { "x": 7, "y": 16 },
         "backgroundColor": [255, 255, 255, 255]
       }
     ],
@@ -41,6 +41,9 @@
     "category": "Productivity",
     "macOS": {
       "minimumSystemVersion": "14.0"
+    },
+    "iOS": {
+      "minimumSystemVersion": "16.0"
     }
   },
   "plugins": {

@@ -5,7 +5,7 @@ mod mobile;
 
 use tauri::{
     plugin::{Builder, TauriPlugin},
-    Runtime,
+    Manager, Runtime,
 };
 
 #[cfg(target_os = "ios")]

@@ -1,8 +1,11 @@
 #[cfg(target_os = "macos")]
 mod browser;
+#[cfg(target_os = "macos")]
 mod menu;
+#[cfg(target_os = "macos")]
 mod updater;
 
+#[cfg(target_os = "macos")]
 use tauri::Manager;
 
 #[cfg(target_os = "macos")]
@@ -25,9 +28,11 @@ fn setup_macos_window(window: &tauri::WebviewWindow) {
     }
 }
 
+#[cfg(target_os = "macos")]
 const STUDIO_URL: &str = "https://studiomaker.app";
 
 /// Returns true if the URL is an allowed domain (studiomaker.app, supabase, googleapis)
+#[cfg(target_os = "macos")]
 fn is_allowed_url(url: &str) -> bool {
     let allowed_patterns = [
         "http://localhost",
@@ -72,6 +77,7 @@ fn get_platform() -> String {
     }
 }
 
+#[cfg(target_os = "macos")]
 #[tauri::command]
 fn open_new_window(app: tauri::AppHandle) -> Result<(), String> {
     let label = format!(
@@ -93,7 +99,7 @@ fn open_new_window(app: tauri::AppHandle) -> Result<(), String> {
     .decorations(true)
     .hidden_title(true)
     .title_bar_style(tauri::TitleBarStyle::Overlay)
-    .traffic_light_position(tauri::Position::Logical(tauri::LogicalPosition::new(16.0, 24.0)))
+    .traffic_light_position(tauri::Position::Logical(tauri::LogicalPosition::new(7.0, 16.0)))
     .on_navigation(|url| {
         // Allow navigation to studiomaker.app and partner domains
         is_allowed_url(url.as_str())
@@ -101,24 +107,45 @@ fn open_new_window(app: tauri::AppHandle) -> Result<(), String> {
     .build()
     .map_err(|e| e.to_string())?;
 
-    #[cfg(target_os = "macos")]
     setup_macos_window(&_window);
 
     Ok(())
 }
 
+/// No-op on iOS — multi-window is not supported
+#[cfg(target_os = "ios")]
+#[tauri::command]
+fn open_new_window(_app: tauri::AppHandle) -> Result<(), String> {
+    Ok(())
+}
+
+#[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    tauri::Builder::default()
-        .plugin(tauri_plugin_window_state::Builder::new().with_filename("window-state.json").build())
+    #[allow(unused_mut)]
+    let mut builder = tauri::Builder::default()
+        .plugin(tauri_plugin_sql::Builder::new().build())
+        .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_shell::init())
-        .plugin(tauri_plugin_updater::Builder::new().build())
-        .plugin(tauri_plugin_pencilkit::init())
+        .plugin(tauri_plugin_pencilkit::init());
+
+    // macOS-only plugins (window state, updater)
+    #[cfg(target_os = "macos")]
+    {
+        builder = builder
+            .plugin(tauri_plugin_window_state::Builder::new().with_filename("window-state.json").build())
+            .plugin(tauri_plugin_updater::Builder::new().build());
+    }
+
+    builder
         .invoke_handler(tauri::generate_handler![
             open_new_window,
             open_external,
             get_platform,
+            #[cfg(target_os = "macos")]
             updater::check_for_updates,
+            #[cfg(target_os = "macos")]
             updater::download_update,
+            #[cfg(target_os = "macos")]
             updater::install_update,
             #[cfg(target_os = "macos")]
             browser::commands::open_browser_window,
@@ -137,16 +164,14 @@ pub fn run() {
             #[cfg(target_os = "macos")]
             browser::commands::browser_switch_tab,
         ])
-        .setup(|app| {
-            let window = app.get_webview_window("main").unwrap();
-
+        .setup(|_app| {
             #[cfg(target_os = "macos")]
-            setup_macos_window(&window);
-
-            menu::setup_menu(app)?;
-
-            // Start background update checker
-            updater::spawn_update_checker(app.handle());
+            {
+                let window = _app.get_webview_window("main").unwrap();
+                setup_macos_window(&window);
+                menu::setup_menu(_app)?;
+                updater::spawn_update_checker(_app.handle());
+            }
 
             Ok(())
         })

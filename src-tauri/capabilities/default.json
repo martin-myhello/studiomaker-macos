@@ -32,8 +32,8 @@
     "core:window:allow-outer-position",
     "core:window:allow-scale-factor",
     "shell:allow-open",
-    "window-state:default",
     "pencilkit:default",
-    "updater:default"
+    "sql:default",
+    "fs:default"
   ]
 }

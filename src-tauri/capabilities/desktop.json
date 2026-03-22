@@ -1,0 +1,14 @@
+{
+  "identifier": "desktop",
+  "description": "macOS-only capabilities (window state, updater)",
+  "platforms": ["macOS"],
+  "windows": [
+    "main",
+    "studio-*",
+    "browser-*"
+  ],
+  "permissions": [
+    "window-state:default",
+    "updater:default"
+  ]
+}
